@@ -29,6 +29,7 @@ class Sru():
             if task.bug.id not in self.all_srus.keys():
                 self.all_srus[task.bug.id] = one_sru()
                 self.all_srus[task.bug.id].title = task.bug.title
+                print("%s" % serie[0], end='',flush=True),
             if serie not in self.all_srus[task.bug.id].series:
                 self.all_srus[task.bug.id].series += [serie]
             if task.assignee is not None:
@@ -40,6 +41,7 @@ class Sru():
     def get_all_tasks(self):
         for serie in valid_series:
             self.get_tasks_for_serie(serie)
+        print()
 
 
 def main():
