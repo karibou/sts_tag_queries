@@ -43,11 +43,18 @@ class Sru():
             self.get_tasks_for_serie(serie)
         print()
 
+    def display_report(self):
+        for bug in sorted(self.all_srus.keys()):
+            print("LP: #%s - %s" % (bug, self.all_srus[bug].title))
+            print("  - Series to SRU : %s" % ' '.join(self.all_srus[bug].series))
+            print("  - Owners : %s" % ' '.join(self.all_srus[bug].owners))
+            print()
 
 def main():
     sru = Sru()
     sru.login()
     sru.get_all_tasks()
+    sru.display_report()
 
 if __name__ == "__main__":
     main()
