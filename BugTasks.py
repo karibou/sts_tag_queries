@@ -53,7 +53,7 @@ class BugTasks():
             if task.bug.id not in self.all_tasks.keys():
                 self.all_tasks[task.bug.id] = OneBugTask()
                 self.all_tasks[task.bug.id].title = task.bug.title
-                print("%s" % serie[0], end='', flush=True),
+                print("%s" % serie[0], end='', flush=True)
             if serie not in self.all_tasks[task.bug.id].series:
                 self.all_tasks[task.bug.id].series += [serie]
             if task.assignee is not None:
