@@ -10,9 +10,10 @@ from launchpadlib.launchpad import Launchpad as lp
 valid_series = ['precise', 'trusty', 'xenial', 'yakkety']
 
 class one_sru():
-    title = ''
-    owners = []
-    series = []
+    def __init__(self):
+        self.title = ''
+        self.owners = []
+        self.series = []
 
 class Sru():
     def __init__(self):
