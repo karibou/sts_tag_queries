@@ -21,10 +21,12 @@ class BugTasks():
     The class logs into Launchpad and query the tasks
     to find the tagged tasks
     """
+    valid_series = ['precise', 'trusty', 'xenial', 'yakkety']
+    start_date = '2015-01-01'
+
     def __init__(self):
         self.tag = None
         self.all_tasks = {}
-        self.valid_series = ['precise', 'trusty', 'xenial', 'yakkety']
         self.lp = None
         self.ubuntu = None
         self.tasks = None
@@ -47,7 +49,7 @@ class BugTasks():
         self.ubuntu = self.lp.distributions['ubuntu'].getSeries(
             name_or_version=serie)
         self.tasks = self.ubuntu.searchTasks(tags=tag,
-                                             created_since='2016-01-01',
+                                             created_since=self.start_date,
                                              order_by='id')
         for task in self.tasks:
             if task.bug.id not in self.all_tasks.keys():
@@ -80,5 +82,4 @@ class BugTasks():
             print("LP: #%s - %s" % (bug, self.all_tasks[bug].title))
             print("  - Series to SRU : %s" % ' '.
                   join(self.all_tasks[bug].series))
-            print("  - Owners : %s" % ' '.join(self.all_tasks[bug].owners))
-            print()
+            print("  - Owners : %s" % ' '.join(self.all_tasks[bug].owners)+'\n')
