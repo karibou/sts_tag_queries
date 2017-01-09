@@ -44,11 +44,11 @@ class BugTasks():
                                              created_since=self.start_date,
                                              order_by='id')
         for task in self.tasks:
-            OneBug=self.all_tasks.setdefault(task.bug.id, {})
-            OneBug['title']=task.bug.title
-            OneBug.setdefault('series',set()).add(serie)
+            OneBug = self.all_tasks.setdefault(task.bug.id, {})
+            OneBug['title'] = task.bug.title
+            OneBug.setdefault('series', set()).add(serie)
             assignee = task.assignee.display_name if task.assignee else 'Unowned'
-            OneBug.setdefault('owners',set()).add(assignee)
+            OneBug.setdefault('owners', set()).add(assignee)
             print("%s" % serie[0], end='', flush=True)
 
     def get_all_tasks(self, tag):
