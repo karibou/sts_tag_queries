@@ -8,14 +8,6 @@
 from launchpadlib.launchpad import Launchpad as lp
 
 
-class OneBugTask():
-    """ One single BugTask """
-    def __init__(self):
-        self.title = ''
-        self.owners = []
-        self.series = []
-
-
 class BugTasks():
     """ The BugTasks class
     The class logs into Launchpad and query the tasks
@@ -52,19 +44,12 @@ class BugTasks():
                                              created_since=self.start_date,
                                              order_by='id')
         for task in self.tasks:
-            if task.bug.id not in self.all_tasks.keys():
-                self.all_tasks[task.bug.id] = OneBugTask()
-                self.all_tasks[task.bug.id].title = task.bug.title
-                print("%s" % serie[0], end='', flush=True)
-            if serie not in self.all_tasks[task.bug.id].series:
-                self.all_tasks[task.bug.id].series += [serie]
-            if task.assignee is not None:
-                if (task.assignee.display_name not in
-                        self.all_tasks[task.bug.id].owners):
-                    self.all_tasks[task.bug.id].owners += \
-                        [task.assignee.display_name]
-            else:
-                self.all_tasks[task.bug.id].owners += ['Unowned']
+            OneBug=self.all_tasks.setdefault(task.bug.id, {})
+            OneBug['title']=task.bug.title
+            OneBug.setdefault('series',set()).add(serie)
+            assignee = task.assignee.display_name if task.assignee else 'Unowned'
+            OneBug.setdefault('owners',set()).add(assignee)
+            print("%s" % serie[0], end='', flush=True)
 
     def get_all_tasks(self, tag):
         """
@@ -79,7 +64,7 @@ class BugTasks():
         Format and display all the collected tasks
         """
         for bug in sorted(self.all_tasks.keys()):
-            print("LP: #%s - %s" % (bug, self.all_tasks[bug].title))
+            print("LP: #%s - %s" % (bug, self.all_tasks[bug]['title']))
             print("  - Series to SRU : %s" % ' '.
-                  join(self.all_tasks[bug].series))
-            print("  - Owners : %s" % ' '.join(self.all_tasks[bug].owners)+'\n')
+                  join(self.all_tasks[bug]['series']))
+            print("  - Owners : %s" % ' '.join(self.all_tasks[bug]['owners'])+'\n')
