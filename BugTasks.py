@@ -47,7 +47,9 @@ class BugTasks():
             OneBug = self.all_tasks.setdefault(task.bug.id, {})
             OneBug['title'] = task.bug.title
             OneBug.setdefault('series', set()).add(serie)
-            assignee = task.assignee.display_name if task.assignee else 'Unowned'
+            OneBug.setdefault('pkg', set()).add(
+                              task.bug_target_name.split()[0])
+            assignee = task.assignee.display_name if task.assignee else 'None'
             OneBug.setdefault('owners', set()).add(assignee)
             print("%s" % serie[0], end='', flush=True)
 
@@ -64,7 +66,10 @@ class BugTasks():
         Format and display all the collected tasks
         """
         for bug in sorted(self.all_tasks.keys()):
-            print("LP: #%s - %s" % (bug, self.all_tasks[bug]['title']))
+            print("LP: #%s - (%s) %s" % (bug,
+                                         ' '.join(self.all_tasks[bug]['pkg']),
+                                         self.all_tasks[bug]['title']))
             print("  - Series to SRU : %s" % ' '.
                   join(self.all_tasks[bug]['series']))
-            print("  - Owners : %s" % ' '.join(self.all_tasks[bug]['owners'])+'\n')
+            print("  - Owners : %s" % ' '.join(self.all_tasks[bug]['owners']) +
+                  '\n')
