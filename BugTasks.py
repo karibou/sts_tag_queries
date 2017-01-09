@@ -61,7 +61,7 @@ class BugTasks():
             self.get_tasks_for_serie(tag, serie)
         print()
 
-    def display_report(self):
+    def display_report(self, long_display):
         """
         Format and display all the collected tasks
         """
@@ -69,7 +69,8 @@ class BugTasks():
             print("LP: #%s - (%s) %s" % (bug,
                                          ' '.join(self.all_tasks[bug]['pkg']),
                                          self.all_tasks[bug]['title']))
-            print("  - Series to SRU : %s" % ' '.
-                  join(self.all_tasks[bug]['series']))
-            print("  - Owners : %s" % ' '.join(self.all_tasks[bug]['owners']) +
-                  '\n')
+            if long_display:
+                print("  - Series to SRU : %s" % ' '.
+                      join(self.all_tasks[bug]['series']))
+                print("  - Owners : %s" % ' '.join(
+                       self.all_tasks[bug]['owners']) + '\n')

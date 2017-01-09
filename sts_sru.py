@@ -5,14 +5,20 @@
 # Copyright (C) 2016 Louis bouchard <louis.bouchard@canonical.com>
 #
 
+import argparse
 from BugTasks import BugTasks
 
 
-def main():
+def main(long):
     sru = BugTasks()
     sru.login()
     sru.get_all_tasks('sts-sru')
-    sru.display_report()
+    sru.display_report(long)
+
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-l', '--long', help='Display series and owners',
+                        action='store_true')
+    args = parser.parse_args()
+    main(args.long)
