@@ -65,7 +65,11 @@ class BugTasks():
         """
         Format and display all the collected tasks
         """
+
+        PkgList = {}
         for bug in sorted(self.all_tasks.keys()):
+            PkgList.setdefault('pkg', set()).add(
+                               ' '.join(self.all_tasks[bug]['pkg']))
             print("LP: #%s - (%s) %s" % (bug,
                                          ' '.join(self.all_tasks[bug]['pkg']),
                                          self.all_tasks[bug]['title']))
@@ -74,3 +78,4 @@ class BugTasks():
                       join(self.all_tasks[bug]['series']))
                 print("  - Owners : %s" % ' '.join(
                        self.all_tasks[bug]['owners']) + '\n')
+        print("#info SRU are pending for : %s" % ', '.join(PkgList['pkg']))
