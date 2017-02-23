@@ -61,7 +61,7 @@ class BugTasks():
             self.get_tasks_for_serie(tag, serie)
         print()
 
-    def display_report(self, long_display):
+    def display_report(self, long_display, tag):
         """
         Format and display all the collected tasks
         """
@@ -78,4 +78,5 @@ class BugTasks():
                       join(self.all_tasks[bug]['series']))
                 print("  - Owners : %s" % ' '.join(
                        self.all_tasks[bug]['owners']) + '\n')
-        print("#info SRU are pending for : %s" % ', '.join(PkgList['pkg']))
+        if tag == 'sts-sru':
+            print("#info SRU are pending for : %s" % ', '.join(PkgList['pkg']))

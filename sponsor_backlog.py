@@ -13,7 +13,7 @@ def main(long):
     sponsors = BugTasks()
     sponsors.login()
     sponsors.get_all_tasks('sts-sponsor')
-    sponsors.display_report(long)
+    sponsors.display_report(long, 'sts-sponsor')
 
 
 if __name__ == "__main__":

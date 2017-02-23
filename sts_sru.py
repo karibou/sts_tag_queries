@@ -13,7 +13,7 @@ def main(long):
     sru = BugTasks()
     sru.login()
     sru.get_all_tasks('sts-sru')
-    sru.display_report(long)
+    sru.display_report(long, 'sts-sru')
 
 
 if __name__ == "__main__":
