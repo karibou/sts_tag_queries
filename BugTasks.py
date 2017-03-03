@@ -51,6 +51,8 @@ class BugTasks():
                               task.bug_target_name.split()[0])
             assignee = task.assignee.display_name if task.assignee else 'None'
             OneBug.setdefault('owners', set()).add(assignee)
+            OneBug['verification'] = [vers for vers in task.bug.tags
+                                   if vers.startswith('verification')]
             print("%s" % serie[0], end='', flush=True)
 
     def get_all_tasks(self, tag):
@@ -76,6 +78,9 @@ class BugTasks():
             if long_display:
                 print("  - Series to SRU : %s" % ' '.
                       join(self.all_tasks[bug]['series']))
+                if self.all_tasks[bug]['verification'] :
+                    print("  - Verification : %s" % ' '.join(
+                           self.all_tasks[bug]['verification']))
                 print("  - Owners : %s" % ' '.join(
                        self.all_tasks[bug]['owners']) + '\n')
         if tag == 'sts-sru':
