@@ -5,6 +5,7 @@
 # Copyright (C) 2016 Louis bouchard <louis.bouchard@canonical.com>
 #
 
+import distro_info
 from launchpadlib.launchpad import Launchpad as lp
 
 
@@ -13,7 +14,7 @@ class BugTasks():
     The class logs into Launchpad and query the tasks
     to find the tagged tasks
     """
-    valid_series = ['precise', 'trusty', 'xenial', 'yakkety']
+    valid_series = distro_info.UbuntuDistroInfo().supported()
     start_date = '2015-01-01'
 
     def __init__(self):
