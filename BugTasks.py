@@ -79,7 +79,7 @@ class BugTasks():
             if long_display:
                 print("  - Series to SRU : %s" % ' '.
                       join(self.all_tasks[bug]['series']))
-                if self.all_tasks[bug]['verification'] :
+                if self.all_tasks[bug]['verification']:
                     print("  - Verification : %s" % ' '.join(
                            self.all_tasks[bug]['verification']))
                 print("  - Owners : %s" % ' '.join(
