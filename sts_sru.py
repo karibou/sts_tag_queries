@@ -12,8 +12,8 @@ from BugTasks import BugTasks
 def main(long):
     sru = BugTasks()
     sru.login()
-    sru.get_all_tasks('sts-sru')
-    sru.display_report(long, 'sts-sru')
+    sru.get_all_tasks('sts-sru-needed')
+    sru.display_report(long, 'sts-sru-needed')
 
 
 if __name__ == "__main__":
