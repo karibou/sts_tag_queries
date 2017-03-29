@@ -84,5 +84,5 @@ class BugTasks():
                            self.all_tasks[bug]['verification']))
                 print("  - Owners : %s" % ' '.join(
                        self.all_tasks[bug]['owners']) + '\n')
-                if tag == 'sts-sru':
+                if tag == 'sts-sru-needed':
                     print("#info SRU are pending for : %s" % ', '.join(PkgList['pkg']))
