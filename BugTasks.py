@@ -34,6 +34,17 @@ class BugTasks():
         self.lp = lp.login_anonymously('sts_tags',
                                        'production', version='devel')
 
+    def add_one_task(self, one_task, serie):
+        OneBug = self.all_tasks.setdefault(one_task.bug.id, {})
+        OneBug['title'] = one_task.bug.title
+        OneBug.setdefault('series', set()).add(serie)
+        OneBug.setdefault('pkg', set()).add(
+                          one_task.bug_target_name.split()[0])
+        assignee = one_task.assignee.display_name if one_task.assignee else 'None'
+        OneBug.setdefault('owners', set()).add(assignee)
+        OneBug['verification'] = [vers for vers in one_task.bug.tags
+                               if vers.startswith('verification')]
+
     def get_ubuntu_tasks_for_serie(self, tag, serie):
         """
         Get all tasks tagged with tag from one single
@@ -45,15 +56,7 @@ class BugTasks():
                                              created_since=self.start_date,
                                              order_by='id')
         for task in self.tasks:
-            OneBug = self.all_tasks.setdefault(task.bug.id, {})
-            OneBug['title'] = task.bug.title
-            OneBug.setdefault('series', set()).add(serie)
-            OneBug.setdefault('pkg', set()).add(
-                              task.bug_target_name.split()[0])
-            assignee = task.assignee.display_name if task.assignee else 'None'
-            OneBug.setdefault('owners', set()).add(assignee)
-            OneBug['verification'] = [vers for vers in task.bug.tags
-                                   if vers.startswith('verification')]
+            self.add_one_task(task, serie)
             print("%s" % serie[0], end='', flush=True)
 
     def get_all_tasks(self, tag):
