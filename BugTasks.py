@@ -34,7 +34,7 @@ class BugTasks():
         self.lp = lp.login_anonymously('sts_tags',
                                        'production', version='devel')
 
-    def get_tasks_for_serie(self, tag, serie):
+    def get_ubuntu_tasks_for_serie(self, tag, serie):
         """
         Get all tasks tagged with tag from one single
         serie. Put tasks in a list indexed by bug number
@@ -61,7 +61,7 @@ class BugTasks():
         Get the tasks for all valid series
         """
         for serie in self.valid_series:
-            self.get_tasks_for_serie(tag, serie)
+            self.get_ubuntu_tasks_for_serie(tag, serie)
         print()
 
     def display_report(self, long_display, tag):
