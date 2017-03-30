@@ -45,6 +45,26 @@ class BugTasks():
         OneBug['verification'] = [vers for vers in one_task.bug.tags
                                if vers.startswith('verification')]
 
+    def get_openstack_tasks(self, tag):
+        """
+        Get all openstack tasks tagged with tag
+        Add each task found to the all_task list
+        """
+        print('Fetching openstack projects.\nThis will take some time...''',
+              end="")
+        self.openstack = self.lp.project_groups['openstack']
+        self.oprojects = [(proj, proj.series)
+                          for proj in self.openstack.projects]
+        print('Got all %d openstack projects' % len(self.oprojects))
+        print('Scanning through all project''series to find tagged bugs\n\
+                This is a long process...', end='')
+        for (project, series) in self.oprojects:
+            for serie in series:
+                tasks = serie.searchTasks(tags=tag)
+                for task in tasks:
+                    self.add_one_task(task, serie.name)
+        print('\n')
+
     def get_ubuntu_tasks_for_serie(self, tag, serie):
         """
         Get all tasks tagged with tag from one single
