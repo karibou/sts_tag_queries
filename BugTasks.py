@@ -40,10 +40,12 @@ class BugTasks():
         OneBug.setdefault('series', set()).add(serie)
         OneBug.setdefault('pkg', set()).add(
                           one_task.bug_target_name.split()[0])
-        assignee = one_task.assignee.display_name if one_task.assignee else 'None'
+        assignee = one_task.assignee.display_name \
+            if one_task.assignee else 'None'
         OneBug.setdefault('owners', set()).add(assignee)
         OneBug['verification'] = [vers for vers in one_task.bug.tags
-                               if vers.startswith('verification')]
+                                  if vers.startswith('verification')]
+        print("%s" % serie[0], end='', flush=True)
 
     def get_openstack_tasks(self, tag):
         """
