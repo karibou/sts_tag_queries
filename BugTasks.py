@@ -65,19 +65,21 @@ class BugTasks():
                     self.add_one_task(task, serie.name)
         print('\n')
 
-    def get_ubuntu_tasks_for_serie(self, tag, serie):
+    def get_uca_tasks(self, tag):
         """
-        Get all tasks tagged with tag from one single
-        serie. Put tasks in a list indexed by bug number
+        Get all ubuntu cloud archive tasks tagged with tag.
+        Add each task found to the all_task list
         """
-        self.ubuntu = self.lp.distributions['ubuntu'].getSeries(
-            name_or_version=serie)
-        self.tasks = self.ubuntu.searchTasks(tags=tag,
-                                             created_since=self.start_date,
-                                             order_by='id')
-        for task in self.tasks:
-            self.add_one_task(task, serie)
-            print("%s" % serie[0], end='', flush=True)
+        print('Fetching Ubuntu Cloud Archive tasks.', end='')
+        self.uca = self.lp.distributions['cloud-archive']
+        self.series = [serie for serie in self.uca.series]
+        self.series.reverse()
+        for serie in self.series:
+            tasks = serie.searchTasks(tags=tag, created_since=self.start_date,
+                                      order_by='id')
+            for task in tasks:
+                self.add_one_task(task, serie.name)
+        print('\n')
 
     def get_all_tasks(self, tag):
         """
