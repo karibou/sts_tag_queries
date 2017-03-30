@@ -9,7 +9,7 @@ import argparse
 from BugTasks import BugTasks
 
 
-def main(long):
+def main(arguments, tag):
     sru = BugTasks()
     sru.login()
     if arguments.ubuntu:
@@ -34,4 +34,5 @@ if __name__ == "__main__":
     parser.add_argument('-U', '--uca', help='Display Ubuntu Cloud Archive\
                         bugs', action='store_true')
     args = parser.parse_args()
-    main(args.long)
+
+    main(args, 'sts-sru-needed')
