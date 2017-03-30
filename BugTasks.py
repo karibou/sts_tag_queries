@@ -10,7 +10,8 @@ from launchpadlib.launchpad import Launchpad as lp
 
 
 class BugTasks():
-    """ The BugTasks class
+    """
+    The BugTasks class
     The class logs into Launchpad and query the tasks
     to find the tagged tasks
     """
@@ -21,8 +22,6 @@ class BugTasks():
         self.tag = None
         self.all_tasks = {}
         self.lp = None
-        self.ubuntu = None
-        self.tasks = None
 
     def login(self):
         """
@@ -30,7 +29,6 @@ class BugTasks():
         version='devel' is important, otherwise no
         task will be returned
         """
-
         self.lp = lp.login_anonymously('sts_tags',
                                        'production', version='devel')
 
