@@ -81,13 +81,23 @@ class BugTasks():
                 self.add_one_task(task, serie.name)
         print('\n')
 
-    def get_all_tasks(self, tag):
+    def get_ubuntu_tasks(self, tag):
         """
-        Get the tasks for all valid series
+        Get all ubuntu tasks tagged with tag.
+        Add each task found to the all_task list
         """
-        for serie in self.valid_series:
-            self.get_ubuntu_tasks_for_serie(tag, serie)
-        print()
+        print('Fetching ubuntu tasks.', end='')
+        self.ubuntu = self.lp.distributions['ubuntu']
+        self.series = [self.ubuntu.current_series]
+        self.series += [serie for serie in self.ubuntu.series if
+                        serie.supported is True]
+        self.series.reverse()
+        for serie in self.series:
+            tasks = serie.searchTasks(tags=tag, created_since=self.start_date,
+                                      order_by='id')
+            for task in tasks:
+                self.add_one_task(task, serie.name)
+        print('\n')
 
     def display_report(self, long_display, tag):
         """
